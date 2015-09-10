@@ -1,10 +1,10 @@
-sudo: required
+language: python
 
-language: bash
+python:
+  - "2.7"
 
-services: docker
+install:
+  - pip install -r requirements.txt
 
-before_install:
-  - docker build -t comp490-group3/api .
-  - docker run -d -p 5000:5000 comp490-group3/api
-  - docker ps -a
+script:
+  - true
