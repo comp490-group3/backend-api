@@ -1,0 +1,10 @@
+sudo: required
+
+services: docker
+
+install:
+  - docker build -t comp490-group3/api .
+
+script:
+  - docker run -d -p 5000:5000 comp490-group3/api
+  - curl -i localhost:5000
