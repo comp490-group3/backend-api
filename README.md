@@ -1,5 +1,7 @@
 # Backend API
 
+[![Build Status](https://travis-ci.org/comp490-group3/backend-api.svg?branch=master)](https://travis-ci.org/comp490-group3/backend-api)
+
 ## Docker Usage
 ```
 docker build -t comp490-group3/api .
