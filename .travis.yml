@@ -1,10 +1,14 @@
 language: python
-
 python:
-  - "2.7"
-
+- '2.7'
 install:
-  - pip install -r requirements.txt
-
+- pip install -r requirements.txt
 script:
-  - true
+- true
+deploy:
+  provider: heroku
+  api_key:
+    secure: SiUYmchvmpsN4OF0lpBkEj238Jwfs6Guggym+jqYpyeQ/jtLfmT4XzUxbOeGI95ddFNw+X3RFZCy7KWfarkbKcab7+/9AyzyaRBN0CQIxvmhJ+V0BvAhrrsg41OWv3pzP7E675hh+JoAknhXN5WgUkbtgctMVRGpISk3ILQYel7KDgwVitjQQeaXBS7fpHQHAnGWc9mnm5E8YG15opdz3hBy9XPCsklTQXhd2VBq77dfloCmeeftK+17kWm2hfX9vXjeeyzUKuFLU6iPriUnUShV4o5tM5za64kB0aUVN2ki4AO1ZdT/xYR51TzUFu0z/qja8hJJVFsft4eV0IS53dCmUMlUWANLxScS6ceqEoqeBV92K+kL143PKgFetSD9RCxcO7vASjr7uG4IgKL6/PUp0l7q4mkEekLAsPt0xzgOIcHaIPJtmnMZQU/gwmUzrK/+yBE0dsktEHwnripwB5NMGpSgHVnFDBKYvv9/HX27DjzM6FenaM+dgReto+EKHhuNL3yjzGLqQFtDcLbNBEegSzok9CukJsBiP9aOA5rWQwSxUWWDOXGHi5nRlRP7jHIs6FwAxG5TuOZPPBSoHJnz1SfiTsS+O+8aQj6mYPLbmlDMVNbH5u5BDmaG0xNZ/Off577wBEqjS83XH1o0yvAGatoa6M1TBpI3MKun1tA=
+  app: lit-refuge-2144
+  on:
+    repo: comp490-group3/backend-api
