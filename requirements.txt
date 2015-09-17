@@ -5,3 +5,4 @@ flask==0.10.1
 dj-database-url==0.3.0
 #SQLAlchemy==1.0.4
 djangorestframework==3.2.3
+django-postgrespool==0.3.0
