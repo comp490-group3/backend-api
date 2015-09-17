@@ -3,9 +3,11 @@
 [![Build Status](https://travis-ci.org/comp490-group3/backend-api.svg?branch=master)](https://travis-ci.org/comp490-group3/backend-api)
 
 ## Django Commands
+```
 python manage.py makemigrations punchd
 python manage.py migrate
 python manage.py createsuperuser
+```
 
 ## Docker Usage
 ```
