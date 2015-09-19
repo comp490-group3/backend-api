@@ -1,10 +1,14 @@
 language: python
+addons:
+  postgressql: "9.4"
 python:
 - '2.7'
 install:
 - pip install -r requirements.txt
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
 script:
-- true
+  - python setup.py test
 deploy:
   provider: heroku
   api_key:
