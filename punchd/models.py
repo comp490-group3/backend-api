@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-# from django.utils import timezone
+from django.utils import timezone
 # import datetime
 
 # class Account(models.Model):
@@ -21,6 +21,31 @@ class Business(models.Model):
     def qrcode(self):
         return 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=punchd%%3A%%2F%%2F%s&choe=UTF-8' % self.pk
 
+    def punch(self, user):
+        """
+        Punch a business' first active offer as a given user
+        :param user: User
+        :return: OfferInstance on success, False if no active or valid offers
+        """
+        offer = self.offer_set.filter(active=True).first()
+
+        if not offer:
+            return False
+
+        offer_instance, created = OfferInstance.objects.get_or_create(
+            user=user,
+            offer=offer,
+        )
+
+        if offer_instance.claimed or offer_instance.can_redeem():
+            return False
+
+        offer_instance.punches.create(
+            user=user,
+            business=self
+        )
+        return offer_instance
+
     class Meta:
         verbose_name_plural = "Businesses"
 
@@ -30,6 +55,7 @@ class Offer(models.Model):
     name = models.CharField(max_length=255)
     punch_total_required = models.PositiveSmallIntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=True)
     # editedon =
     # timestamp = models.DateTimeField()
 
@@ -41,6 +67,12 @@ class OfferInstance(models.Model):
     offer = models.ForeignKey(Offer)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     claimed = models.BooleanField(default=False)
+    punches = models.ManyToManyField('Punch') # TODO use architecture with less db overhead
+    # timestamp = models.DateTimeField()
+
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+    claimed_on = models.DateTimeField(null=True, blank=True)
 
     def can_redeem(self):
         """
@@ -48,7 +80,7 @@ class OfferInstance(models.Model):
 
         :return: True if yes, False if no
         """
-        if self.punch_total == self.offer.punch_total_required:
+        if self.claimed is False and self.punch_total == self.offer.punch_total_required:
             return True
         else:
             return False
@@ -61,8 +93,8 @@ class OfferInstance(models.Model):
         """
         if self.can_redeem():
             self.claimed = True
-            # self.claimedon = timezone.now()
-            # self.claimedon = datetime.datetime.now()
+            self.claimed_on = timezone.now()
+            # self.claimed_on = datetime.datetime.now()
             self.save()
             return True
         else:
@@ -76,20 +108,23 @@ class OfferInstance(models.Model):
 
         :return: Integer number of times this offer has been punched
         """
-        return Punch.objects.filter(user=self.user, business=self.offer.business).count()
+        # return Punch.objects.filter(user=self.user, business=self.offer.business).count()
+        return self.punches.count()
 
-    # createdon = models.DateTimeField(auto_now_add=True)
-    # updatedon = models.DateTimeField(auto_now=True)
-    # claimedon = models.DateTimeField(null=True, blank=True)
+    def __unicode__(self):
+        return u'%s (%d of %d for %s)' % (self.offer.name, self.punch_total, self.offer.punch_total_required, self.user)
 
-    # - count
-    # - timestamp
+    class Meta:
+        unique_together = ("user", "offer") # Only allow a user to have 1 instance of an offer
 
 
 class Punch(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     business = models.ForeignKey(Business)
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return u'%s at %s' % (self.user, self.business)
 
     class Meta:
         verbose_name_plural = "Punches"
