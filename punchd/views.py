@@ -42,7 +42,7 @@ class OfferInstanceViewSet(viewsets.ModelViewSet):
     queryset = OfferInstance.objects.all().order_by('pk')
     serializer_class = serializers.OfferInstanceSerializer
 
-    @detail_route(methods=['POST'])
+    @detail_route(methods=['GET'], permission_classes=[IsAuthenticated])
     def redeem(self, request, pk=None):
         offer = self.get_object()
         return Response({'status': offer.redeem()})
