@@ -15,7 +15,7 @@ class Business(models.Model):
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     location = models.PointField()
-    url = models.URLField()
+    link = models.URLField(verbose_name="URL")
 
     objects = models.GeoManager()
 
@@ -117,8 +117,18 @@ class OfferInstance(models.Model):
         # return Punch.objects.filter(user=self.user, business=self.offer.business).count()
         return self.punches.count()
 
+    @property
+    def punch_total_required(self):
+        """
+        Total number of times this offer needs to be punched to be redeemed
+
+        :return: Integer number of times this offer has to be punched to be redeemed
+        """
+        return self.offer.punch_total_required
+
     def __unicode__(self):
-        return u'%s (%d of %d for %s)' % (self.offer.name, self.punch_total, self.offer.punch_total_required, self.user)
+        # return u'%s (%d of %d for %s)' % (self.offer.name, self.punch_total, self.offer.punch_total_required, self.user)
+        return u'%s (for %s)' % (self.offer.name, self.user)
 
     class Meta:
         unique_together = ("user", "offer") # Only allow a user to have 1 instance of an offer

@@ -12,7 +12,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class BusinessSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Business
-        fields = ('url', 'name', 'qrcode')
+        fields = ('url', 'name', 'address', 'location', 'link', 'qrcode')
 
 
 # class OfferSerializer(serializers.HyperlinkedModelSerializer):
