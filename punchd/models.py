@@ -1,5 +1,6 @@
 from django.conf import settings
-from django.db import models
+# from django.db import models
+from django.contrib.gis.db import models
 from django.utils import timezone
 # import datetime
 
@@ -12,7 +13,12 @@ from django.utils import timezone
 
 class Business(models.Model):
     name = models.CharField(max_length=255)
-    # - location
+    address = models.CharField(max_length=255)
+    location = models.PointField()
+    url = models.URLField()
+
+    objects = models.GeoManager()
+
 
     def __unicode__(self):
         return self.name
