@@ -7,10 +7,9 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'businesses', views.BusinessViewSet)
-# router.register(r'offers', views.OfferInstanceViewSet)
 
 router.register(r'offers', views.OfferViewSet)
-router.register(r'offerinstances', views.OfferInstanceViewSet)
+# router.register(r'offerinstances', views.OfferInstanceViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

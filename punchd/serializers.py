@@ -12,24 +12,25 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class BusinessSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Business
-        fields = ('url', 'name') #, 'qrcode')
+        fields = ('url', 'name', 'qrcode')
+
+
+# class OfferSerializer(serializers.HyperlinkedModelSerializer):
+#     class Meta:
+#         model = Offer
+#         depth = 1
 
 
 class OfferSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Offer
-        depth = 1
-
-
-class OfferInstanceSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='offerinstance-detail')
-    offer = serializers.HyperlinkedIdentityField(view_name='offer-detail')
+    # offer = serializers.HyperlinkedIdentityField(view_name='offer-detail')
     business = serializers.HyperlinkedIdentityField(view_name='business-detail')
     name = serializers.CharField(max_length=255, source='offer.name')
     punch_total_required = serializers.IntegerField(source='offer.punch_total_required', read_only=True)
     business = BusinessSerializer(source='offer.business', read_only=True)
-    claimed = serializers.BooleanField(required=False, read_only=True)
-    claimed_on = serializers.DateTimeField(allow_null=True, required=False, read_only=True)
+    can_redeem = serializers.ReadOnlyField()
+    redeemed = serializers.BooleanField(required=False, read_only=True)
+    redeemed_on = serializers.DateTimeField(allow_null=True, required=False, read_only=True)
     updated_on = serializers.DateTimeField(read_only=True)
     created_on = serializers.DateTimeField(read_only=True)
 
@@ -42,5 +43,6 @@ class OfferInstanceSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = OfferInstance
         depth = 2
-        fields = ('url', 'name', 'offer', 'business', 'user', 'punch_total', 'punch_total_required',
-                  'claimed', 'claimed_on', 'updated_on', 'created_on')
+        # fields = ('url', 'name', 'offer', 'business', 'user', 'punch_total', 'punch_total_required',
+        fields = ('url', 'name', 'business', 'user', 'punch_total', 'punch_total_required',
+                  'can_redeem', 'redeemed', 'redeemed_on', 'updated_on', 'created_on')

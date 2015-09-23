@@ -37,7 +37,7 @@ class Business(models.Model):
             offer=offer,
         )
 
-        if offer_instance.claimed or offer_instance.can_redeem():
+        if offer_instance.redeemed or offer_instance.can_redeem():
             return False
 
         offer_instance.punches.create(
@@ -66,13 +66,13 @@ class Offer(models.Model):
 class OfferInstance(models.Model):
     offer = models.ForeignKey(Offer)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    claimed = models.BooleanField(default=False)
+    redeemed = models.BooleanField(default=False)
     punches = models.ManyToManyField('Punch') # TODO use architecture with less db overhead
     # timestamp = models.DateTimeField()
 
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
-    claimed_on = models.DateTimeField(null=True, blank=True)
+    redeemed_on = models.DateTimeField(null=True, blank=True)
 
     def can_redeem(self):
         """
@@ -80,7 +80,7 @@ class OfferInstance(models.Model):
 
         :return: True if yes, False if no
         """
-        if self.claimed is False and self.punch_total == self.offer.punch_total_required:
+        if self.redeemed is False and self.punch_total == self.offer.punch_total_required:
             return True
         else:
             return False
@@ -92,9 +92,9 @@ class OfferInstance(models.Model):
         :return: True on success, False on failure
         """
         if self.can_redeem():
-            self.claimed = True
-            self.claimed_on = timezone.now()
-            # self.claimed_on = datetime.datetime.now()
+            self.redeemed = True
+            self.redeemed_on = timezone.now()
+            # self.redeemed_on = datetime.datetime.now()
             self.save()
             return True
         else:

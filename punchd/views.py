@@ -31,16 +31,16 @@ class BusinessViewSet(viewsets.ModelViewSet):
         if offer_instance is False:
             return Response({'status': False})
         else:
-            serializer = serializers.OfferInstanceSerializer(offer_instance, context={'request': request})
+            serializer = serializers.OfferSerializer(offer_instance, context={'request': request})
             return Response(serializer.data)
 
 
-class OfferInstanceViewSet(viewsets.ModelViewSet):
+class OfferViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows offers to be viewed or edited.
     """
     queryset = OfferInstance.objects.all().order_by('pk')
-    serializer_class = serializers.OfferInstanceSerializer
+    serializer_class = serializers.OfferSerializer
 
     @detail_route(methods=['GET'], permission_classes=[IsAuthenticated])
     def redeem(self, request, pk=None):
@@ -48,9 +48,9 @@ class OfferInstanceViewSet(viewsets.ModelViewSet):
         return Response({'status': offer.redeem()})
 
 
-class OfferViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows offers to be viewed or edited.
-    """
-    queryset = Offer.objects.all().order_by('pk')
-    serializer_class = serializers.OfferSerializer
+# class OfferViewSet(viewsets.ModelViewSet):
+#     """
+#     API endpoint that allows offers to be viewed or edited.
+#     """
+#     queryset = Offer.objects.all().order_by('pk')
+#     serializer_class = serializers.OfferSerializer
