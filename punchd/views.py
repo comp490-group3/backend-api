@@ -51,15 +51,15 @@ class OfferViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.OfferSerializer
     # permission_classes = (permissions.IsAuthenticated, IsAdminOrOwner)  # TODO change to IsOwner
 
-    def get_queryset(self):
-        """
-        This view should return a list of all the purchases
-        for the currently authenticated user.
-        """
-        if self.request.user.is_staff:
-            return OfferInstance.objects.all()
-        else:
-            return OfferInstance.objects.filter(user=self.request.user)
+    # def get_queryset(self):
+    #     """
+    #     This view should return a list of all the purchases
+    #     for the currently authenticated user.
+    #     """
+    #     if self.request.user.is_staff:
+    #         return OfferInstance.objects.all()
+    #     else:
+    #         return OfferInstance.objects.filter(user=self.request.user)
 
     @detail_route(methods=['POST', 'GET'])  # TODO remove GET
     def redeem(self, request, pk=None):
