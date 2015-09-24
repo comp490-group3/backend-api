@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='business',
             name='location',
-            field=models.TextField(),
+            field=models.TextField(default=''),
             preserve_default=False,
         ),
         migrations.AddField(
