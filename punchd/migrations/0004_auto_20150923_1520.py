@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='business',
             name='location',
-            field=django.contrib.gis.db.models.fields.PointField(default='POINT(-118.5286617 34.2415936)', srid=4326),
+            field=models.TextField(),
             preserve_default=False,
         ),
         migrations.AddField(
