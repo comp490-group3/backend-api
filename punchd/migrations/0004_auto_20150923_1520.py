@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import django.contrib.gis.db.models.fields
+# import django.contrib.gis.db.models.fields
 
 
 class Migration(migrations.Migration):
