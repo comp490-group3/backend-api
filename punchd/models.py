@@ -1,6 +1,6 @@
 from django.conf import settings
-# from django.db import models
-from django.contrib.gis.db import models
+from django.db import models
+# from django.contrib.gis.db import models
 from django.utils import timezone
 # import datetime
 
@@ -14,12 +14,12 @@ from django.utils import timezone
 class Business(models.Model):
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
-    location = models.PointField()
+    location = models.TextField()
     link = models.URLField(verbose_name="URL")
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)
     timestamp = models.DateTimeField(auto_now_add=True)
 
-    objects = models.GeoManager()
+    # objects = models.GeoManager()
 
     def __unicode__(self):
         return self.name

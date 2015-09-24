@@ -5,5 +5,5 @@ dj-database-url==0.3.0
 #SQLAlchemy==1.0.4
 djangorestframework==3.2.3
 django-postgrespool==0.3.0
-djangorestframework-gis==0.9.4
+#djangorestframework-gis==0.9.4
 django-rest-swagger==0.3.4

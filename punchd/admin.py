@@ -1,5 +1,5 @@
-# from django.contrib import admin
-from django.contrib.gis import admin
+from django.contrib import admin
+# from django.contrib.gis import admin
 
 from .models import Business, Offer, OfferInstance, Punch
 
@@ -21,7 +21,7 @@ class OfferInline(admin.StackedInline):
     # show_change_link = True
 
 
-class BusinessAdmin(admin.OSMGeoAdmin):
+class BusinessAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'address', 'link')
     inlines = [
         OfferInline,
