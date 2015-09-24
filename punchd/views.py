@@ -47,8 +47,9 @@ class OfferViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows offers to be viewed or edited.
     """
+    queryset = OfferInstance.objects.all().order_by('-pk')
     serializer_class = serializers.OfferSerializer
-    permission_classes = (permissions.IsAuthenticated, IsAdminOrOwner)  # TODO change to IsOwner
+    # permission_classes = (permissions.IsAuthenticated, IsAdminOrOwner)  # TODO change to IsOwner
 
     def get_queryset(self):
         """
