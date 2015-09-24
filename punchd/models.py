@@ -16,9 +16,10 @@ class Business(models.Model):
     address = models.CharField(max_length=255)
     location = models.PointField()
     link = models.URLField(verbose_name="URL")
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     objects = models.GeoManager()
-
 
     def __unicode__(self):
         return self.name

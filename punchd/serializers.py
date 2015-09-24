@@ -12,8 +12,9 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class BusinessSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Business
-        fields = ('url', 'name', 'address', 'location', 'link', 'qrcode')
+        fields = ('url', 'name', 'address', 'location', 'link', 'owner', 'timestamp', 'qrcode')
 
+    # TODO inline offer(s)
 
 # class OfferSerializer(serializers.HyperlinkedModelSerializer):
 #     class Meta:
@@ -22,7 +23,7 @@ class BusinessSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class OfferSerializer(serializers.HyperlinkedModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name='offerinstance-detail')
+    url = serializers.HyperlinkedIdentityField(view_name='offer-detail')
     # offer = serializers.HyperlinkedIdentityField(view_name='offer-detail')
     business = serializers.HyperlinkedIdentityField(view_name='business-detail')
     name = serializers.CharField(max_length=255, source='offer.name')
