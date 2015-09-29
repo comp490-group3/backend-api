@@ -9,13 +9,13 @@ class PunchdUserTestCase(TestCase):
         """
         Creates a business and an offer
         """
-        self.business = Business.objects.create(name="Freudian Sip", address="12345 Anystreet USA",
-                                                location="POINT(-118.5286617 34.2415936)",
-                                                link="http://www.csun.edu/")
-
         self.user = User.objects.create_user(
             username='user', email='user@example.com', password='top_secret'
         )
+
+        self.business = Business.objects.create(name="Freudian Sip", address="12345 Anystreet USA",
+                                                location="POINT(-118.5286617 34.2415936)",
+                                                link="http://www.csun.edu/", owner=self.user)
 
         self.offer = self.business.offer_set.create(
             name="Free coffee",
@@ -117,9 +117,12 @@ class PunchdUserTestCase(TestCase):
 
 class PunchdSimpleTestCase(TestCase):
     def setUp(self):
+        self.user = User.objects.create_user(
+            username='user2', email='user@example.com', password='top_secret'
+        )
         self.business = Business.objects.create(name="Freudian Sip", address="12345 Anystreet USA",
                                                 location="POINT(-118.5286617 34.2415936)",
-                                                link="http://www.csun.edu/")
+                                                link="http://www.csun.edu/", owner=self.user)
 
     def test_create_offer(self):
         """Tests a businesses offers"""
