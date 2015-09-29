@@ -7,3 +7,4 @@ djangorestframework==3.2.4
 django-postgrespool==0.3.0
 #djangorestframework-gis==0.9.4
 django-rest-swagger==0.3.4
+django-bootstrap3==6.2.2
