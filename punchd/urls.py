@@ -23,4 +23,9 @@ urlpatterns = [
     url(r'^docs/', include('rest_framework_swagger.urls')),
     url(r'^business/$', views.BusinessListView.as_view(), name='business-index'),
     url(r'^business/(?P<pk>[0-9]+)/$', views.BusinessDetailView.as_view(), name='business-detail'),
+    url(r'^business/add/$', views.BusinessCreateView.as_view(), name='business-add'),
+    url(r'^business/(?P<pk>[0-9]+)/edit/$', views.BusinessUpdateView.as_view(), name='business-update'),
+    # url(r'^business/offer/(?P<pk>[0-9]+)/$', views.OfferListView.as_view(), name='offer-index'),
+    url(r'^business/(?P<bid>[0-9]+)/offer/(?P<pk>[0-9]+)/$', views.OfferDetailView.as_view(), name='offer-detail'),
+
 ]

@@ -33,7 +33,7 @@
     </table>
 
     <div class="btn-group format-selection">
-        <a class="btn btn-primary js-tooltip" href="{{ request.get_full_path }}" rel="nofollow" title="Add a new business">Add A Business</a>
+        <a class="btn btn-primary js-tooltip" href="{% url "business-add" %}" rel="nofollow" title="Add a new business">Add A Business</a>
     </div>
 
 {% endblock %}

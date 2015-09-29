@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 # from django.contrib.gis.db import models
 from django.utils import timezone
+from django.core.urlresolvers import reverse
 # import datetime
 
 # class Account(models.Model):
@@ -53,6 +54,9 @@ class Business(models.Model):
         )
         return offer_instance
 
+    def get_absolute_url(self):
+        return reverse('business-detail', kwargs={'pk': self.pk})
+
     class Meta:
         verbose_name_plural = "Businesses"
 
@@ -69,6 +73,8 @@ class Offer(models.Model):
     def __unicode__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('offer-detail', kwargs={'pk': self.pk})
 
 class OfferInstance(models.Model):
     offer = models.ForeignKey(Offer)

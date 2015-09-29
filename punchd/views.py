@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.http import HttpResponse
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.core.urlresolvers import reverse_lazy
+
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework.decorators import detail_route
@@ -18,6 +20,40 @@ class BusinessListView(ListView):
 
 class BusinessDetailView(DetailView):
     model = Business
+
+
+class BusinessUpdateView(UpdateView):
+    model = Business
+    fields = ['name', 'address', 'link']
+    success_url = reverse_lazy('business-index')
+
+    def get_context_data(self, **kwargs):
+        context = super(BusinessUpdateView, self).get_context_data(**kwargs)
+        context['form_title'] = "Update a business"
+        return context
+
+
+class BusinessCreateView(CreateView):
+    model = Business
+    fields = ['name', 'address', 'link']
+    success_url = reverse_lazy('business-index')
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super(BusinessCreateView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(BusinessCreateView, self).get_context_data(**kwargs)
+        context['form_title'] = "Create a business"
+        return context
+
+
+class OfferListView(ListView):
+    model = Offer
+
+
+class OfferDetailView(DetailView):
+    model = Offer
 
 
 class UserViewSet(viewsets.ModelViewSet):

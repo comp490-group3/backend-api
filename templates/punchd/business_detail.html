@@ -19,15 +19,19 @@
             <h4>URL</h4>
             <p>{{ business.link|urlize }}</p>
 
-            <h4>Location</h4>
-            <p>{{ business.location }}</p>
-
             <h4>Created on</h4>
             <p>{{ business.timestamp }}</p>
 
+            <h4>Offers</h4>
+            <ul>
+            {% for offer in business.offer_set.all %}
+                <li><a href="{% url "offer-detail" offer.id %}">{{ offer.name }} ({{ offer.punch_total_required }} punches required)</a></li>
+            {% endfor %}
+            </ul>
+
             <br>
             <div class="btn-group format-selection">
-                <a class="btn btn-primary js-tooltip" href="{{ request.get_full_path }}" rel="nofollow" title="Edit this business">Edit Business</a>
+                <a class="btn btn-primary js-tooltip" href="{% url "business-update" business.id %}" rel="nofollow" title="Edit this business">Edit Business</a>
                 <a class="btn btn-primary js-tooltip" href="{{ request.get_full_path }}" rel="nofollow" title="Delete this business">Delete Business</a>
             </div>
         </div>
