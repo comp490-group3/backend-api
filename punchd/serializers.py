@@ -6,13 +6,13 @@ from rest_framework import serializers
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ('url', 'username', 'email', 'is_staff')
+        fields = ('id', 'url', 'username', 'email', 'is_staff')
 
 
 class BusinessSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Business
-        fields = ('url', 'name', 'address', 'location', 'link', 'owner', 'timestamp', 'qrcode')
+        fields = ('id', 'url', 'name', 'address', 'location', 'link', 'owner', 'timestamp', 'qrcode')
 
     # TODO inline offer(s)
 
@@ -45,5 +45,5 @@ class OfferSerializer(serializers.HyperlinkedModelSerializer):
         model = OfferInstance
         depth = 2
         # fields = ('url', 'name', 'offer', 'business', 'user', 'punch_total', 'punch_total_required',
-        fields = ('url', 'name', 'business', 'user', 'punch_total', 'punch_total_required',
+        fields = ('id', 'url', 'name', 'business', 'user', 'punch_total', 'punch_total_required',
                   'can_redeem', 'redeemed', 'redeemed_on', 'updated_on', 'created_on')
