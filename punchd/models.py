@@ -26,7 +26,7 @@ class Business(models.Model):
         return self.name
 
     @property
-    def qrcode(self, height=300, width=300, prefix='punchd%%3A%%2F%%2F'):
+    def qrcode(self, height=300, width=300, prefix='punchd%3A'):
         return 'https://chart.googleapis.com/chart?chs=%dx%d&cht=qr&chl=%s%s&choe=UTF-8&chld=H|0' % (height, width, prefix, self.pk)
 
     def punch(self, user):
