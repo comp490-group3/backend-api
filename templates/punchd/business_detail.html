@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load url from future %}
+{% block title %}Business Detail{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>{{ business.name }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <p><img src="{{ business.qrcode|escape }}"></p>
+
+        </div>
+        <div class="col-sm-6">
+            <h4>Address</h4>
+            <address>{{ business.address }}</address>
+
+            <h4>URL</h4>
+            <p>{{ business.link|urlize }}</p>
+
+            <h4>Location</h4>
+            <p>{{ business.location }}</p>
+
+            <h4>Created on</h4>
+            <p>{{ business.timestamp }}</p>
+
+            <br>
+            <div class="btn-group format-selection">
+                <a class="btn btn-primary js-tooltip" href="{{ request.get_full_path }}" rel="nofollow" title="Edit this business">Edit Business</a>
+                <a class="btn btn-primary js-tooltip" href="{{ request.get_full_path }}" rel="nofollow" title="Delete this business">Delete Business</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from django.http import HttpResponse
+from django.views.generic import ListView, DetailView
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework.decorators import detail_route
@@ -8,6 +10,14 @@ from rest_framework.response import Response
 from .models import Business, Offer, OfferInstance
 from .permissions import IsOwner, IsAdminOrOwner
 from . import serializers
+
+
+class BusinessListView(ListView):
+    model = Business
+
+
+class BusinessDetailView(DetailView):
+    model = Business
 
 
 class UserViewSet(viewsets.ModelViewSet):

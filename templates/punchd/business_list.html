@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load url from future %}
+{% block title %}Business List{% endblock %}
+{% block content %}
+    <h1>My Businesses</h1>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>URL</th>
+            <th>QR Code</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for business in object_list %}
+            <tr>
+                <td><a href="{% url "business-detail" business.id %}">{{business.name}}</a></td>
+                <td>{{ business.address }}</td>
+                <td>{{ business.link }}</td>
+                <td><img src="{{ business.qrcode|escape }}" height="100" width="100"></td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td>No businesses yet.</td>
+                <td></td>
+                <td></td>
+            <td></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="btn-group format-selection">
+        <a class="btn btn-primary js-tooltip" href="{{ request.get_full_path }}" rel="nofollow" title="Add a new business">Add A Business</a>
+    </div>
+
+{% endblock %}
