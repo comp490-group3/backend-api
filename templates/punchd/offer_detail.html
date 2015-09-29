@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load url from future %}
+{% block title %}Offer Detail{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>{{ offer.name }}</h1>
+
+            <h4>Business</h4>
+            <p><a href="{% url "business-detail" offer.business.id %}">{{ offer.business.name }}</a></p>
+
+            <h4>Created on</h4>
+            <p>{{ offer.timestamp }}</p>
+
+{#            <h4>Active</h4>#}
+{#            <p>{{ offer.active }}</p>#}
+
+            <h4>Punch Total Required</h4>
+            <p>{{ offer.punch_total_required }}</p>
+
+            <div class="btn-group format-selection">
+                <a class="btn btn-primary js-tooltip" href="{% url "offer-update" offer.id %}" rel="nofollow" title="Edit this offer">Edit Offer</a>
+                <a class="btn btn-primary js-tooltip" href="{% url "offer-delete" offer.id %}" rel="nofollow" title="Delete this offer">Delete Offer</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

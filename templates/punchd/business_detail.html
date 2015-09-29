@@ -25,7 +25,9 @@
             <h4>Offers</h4>
             <ul>
             {% for offer in business.offer_set.all %}
-                <li><a href="{% url "offer-detail" offer.id %}">{{ offer.name }} ({{ offer.punch_total_required }} punches required)</a></li>
+                <li><a href="{% url "offer-detail" offer.id %}">{{ offer.name }}</a> ({{ offer.punch_total_required }} punches required)</li>
+            {% empty %}
+                <li>No offers exist. <a href="{% url "offer-add" business.id %}">Create an offer</a></li>
             {% endfor %}
             </ul>
 

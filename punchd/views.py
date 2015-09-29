@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from django.http import HttpResponse
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 
 from rest_framework import viewsets
@@ -55,6 +55,36 @@ class OfferListView(ListView):
 class OfferDetailView(DetailView):
     model = Offer
 
+
+class OfferUpdateView(UpdateView):
+    model = Offer
+    fields = ['name', 'punch_total_required']
+    success_url = reverse_lazy('business-index')
+
+    def get_context_data(self, **kwargs):
+        context = super(OfferUpdateView, self).get_context_data(**kwargs)
+        context['form_title'] = "Update an offer"
+        return context
+
+
+class OfferCreateView(CreateView):
+    model = Offer
+    fields = ['name', 'punch_total_required']
+    success_url = reverse_lazy('business-index')
+
+    def form_valid(self, form):
+        form.instance.business = get_object_or_404(Business, pk=self.kwargs['bid'])
+        return super(OfferCreateView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(OfferCreateView, self).get_context_data(**kwargs)
+        context['form_title'] = "Create an offer"
+        return context
+
+
+class OfferDeleteView(DeleteView):
+    model = Offer
+    success_url = reverse_lazy('business-index')
 
 class UserViewSet(viewsets.ModelViewSet):
     """
