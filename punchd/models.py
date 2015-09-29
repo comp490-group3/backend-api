@@ -76,6 +76,7 @@ class Offer(models.Model):
     def get_absolute_url(self):
         return reverse('offer-detail', kwargs={'pk': self.pk})
 
+
 class OfferInstance(models.Model):
     offer = models.ForeignKey(Offer)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
