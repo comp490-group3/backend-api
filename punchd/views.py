@@ -38,7 +38,7 @@ class BusinessUpdateView(SuccessMessageMixin, UpdateView):
 class BusinessCreateView(SuccessMessageMixin, CreateView):
     model = Business
     fields = ['name', 'address', 'link']
-    success_url = reverse_lazy('business-index')
+    success_url="/business/{id}/"
     success_message = "%(name)s was created successfully"
 
     def form_valid(self, form):
