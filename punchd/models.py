@@ -38,7 +38,7 @@ class Business(models.Model):
         """
         offer = self.offer_set.filter(active=True).first()
 
-        if hasattr(user, 'is_anonymous'):
+        if hasattr(user, 'is_anonymous') and user.is_anonymous():
             #TODO remove!!!
             user = User.objects.get(pk=1)
 
