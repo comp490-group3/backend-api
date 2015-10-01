@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
 
 from rest_framework import viewsets
 from rest_framework import permissions
@@ -22,10 +23,11 @@ class BusinessDetailView(DetailView):
     model = Business
 
 
-class BusinessUpdateView(UpdateView):
+class BusinessUpdateView(SuccessMessageMixin, UpdateView):
     model = Business
     fields = ['name', 'address', 'link']
-    success_url = reverse_lazy('business-index')
+    success_url="/business/{id}/"
+    success_message = "%(name)s was saved successfully"
 
     def get_context_data(self, **kwargs):
         context = super(BusinessUpdateView, self).get_context_data(**kwargs)
@@ -33,10 +35,11 @@ class BusinessUpdateView(UpdateView):
         return context
 
 
-class BusinessCreateView(CreateView):
+class BusinessCreateView(SuccessMessageMixin, CreateView):
     model = Business
     fields = ['name', 'address', 'link']
     success_url = reverse_lazy('business-index')
+    success_message = "%(name)s was created successfully"
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
@@ -56,10 +59,11 @@ class OfferDetailView(DetailView):
     model = Offer
 
 
-class OfferUpdateView(UpdateView):
+class OfferUpdateView(SuccessMessageMixin, UpdateView):
     model = Offer
     fields = ['name', 'punch_total_required']
-    success_url = reverse_lazy('business-index')
+    success_url="/business/{business_id}/"
+    success_message = "%(name)s was saved successfully"
 
     def get_context_data(self, **kwargs):
         context = super(OfferUpdateView, self).get_context_data(**kwargs)
@@ -67,10 +71,11 @@ class OfferUpdateView(UpdateView):
         return context
 
 
-class OfferCreateView(CreateView):
+class OfferCreateView(SuccessMessageMixin, CreateView):
     model = Offer
     fields = ['name', 'punch_total_required']
-    success_url = reverse_lazy('business-index')
+    success_url="/business/{business_id}/"
+    success_message = "%(name)s was created successfully"
 
     def form_valid(self, form):
         form.instance.business = get_object_or_404(Business, pk=self.kwargs['bid'])
@@ -79,12 +84,15 @@ class OfferCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(OfferCreateView, self).get_context_data(**kwargs)
         context['form_title'] = "Create an offer"
+        context['business'] = get_object_or_404(Business, pk=self.kwargs['bid'])
         return context
 
 
-class OfferDeleteView(DeleteView):
+class OfferDeleteView(SuccessMessageMixin, DeleteView):
     model = Offer
-    success_url = reverse_lazy('business-index')
+    success_url="/business/{business_id}/"
+    success_message = "Offer was deleted successfully"
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """

@@ -2,6 +2,22 @@
 {% load bootstrap3 %}
 
 {% load url from future %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+  {{ block.super }}
+
+
+  {% if offer.pk %}
+      {% breadcrumb offer.business.name "business-detail" offer.business.id %}
+      {% breadcrumb offer.name "offer-detail" offer.id %}
+      {% breadcrumb "Edit Offer" "offer-update" business.pk %}
+  {% else %}
+      {% breadcrumb business.name "business-detail" business.id %}
+      {% breadcrumb "New Offer" "business-list" %}
+  {% endif %}
+
+{% endblock %}
 {% block title %}Edit Offer{% endblock %}
 {% block content %}
     <h1>{{ form_title }}</h1>
@@ -9,7 +25,7 @@
     {% bootstrap_form form %}
     {% buttons %}
         <button type="submit" class="btn btn-primary">
-            Submit
+            Save Offer
         </button>
     {% endbuttons %}
     </form>

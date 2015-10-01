@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 {% load url from future %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+  {{ block.super }}
+  {% breadcrumb offer.business.name "business-detail" offer.business.id %}
+{#  {% breadcrumb "Offers" "business-detail" offer.business.id %}#}
+  {% breadcrumb offer.name "offer-detail" offer.id %}
+{% endblock %}
+
 {% block title %}Offer Detail{% endblock %}
 {% block content %}
     <div class="row">
@@ -18,10 +27,8 @@
             <h4>Punch Total Required</h4>
             <p>{{ offer.punch_total_required }}</p>
 
-            <div class="btn-group format-selection">
                 <a class="btn btn-primary js-tooltip" href="{% url "offer-update" offer.id %}" rel="nofollow" title="Edit this offer">Edit Offer</a>
                 <a class="btn btn-primary js-tooltip" href="{% url "offer-delete" offer.id %}" rel="nofollow" title="Delete this offer">Delete Offer</a>
-            </div>
         </div>
     </div>
 {% endblock %}

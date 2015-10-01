@@ -8,3 +8,4 @@ django-postgrespool==0.3.0
 #djangorestframework-gis==0.9.4
 django-rest-swagger==0.3.4
 django-bootstrap3==6.2.2
+django-bootstrap-breadcrumbs==0.7.1

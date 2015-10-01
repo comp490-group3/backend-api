@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     # 'django.contrib.gis',
     'rest_framework',
     # 'rest_framework_gis',
+    'django_bootstrap_breadcrumbs',
     'rest_framework_swagger',
     'bootstrap3',
     'punchd',
@@ -153,3 +154,11 @@ REST_FRAMEWORK = {
 # GEOS_LIBRARY_PATH = "{}/libgeos_c.so".format(environ.get('GEOS_LIBRARY_PATH'))
 # GDAL_LIBRARY_PATH = "{}/libgdal.so".format(environ.get('GDAL_LIBRARY_PATH'))
 # PROJ4_LIBRARY_PATH = "{}/libproj.so".format(environ.get('PROJ4_LIBRARY_PATH'))
+BOOTSTRAP3 = {
+    'set_placeholder': False,
+    'field_renderers': {
+        # 'default': 'bootstrap3.renderers.InlineFieldRenderer',
+        'default': 'bootstrap3.renderers.FieldRenderer',
+        'inline': 'bootstrap3.renderers.InlineFieldRenderer',
+    },
+}

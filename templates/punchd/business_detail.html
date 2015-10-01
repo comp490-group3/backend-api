@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% load url from future %}
+{% load django_bootstrap_breadcrumbs %}
+
 {% block title %}Business Detail{% endblock %}
+{% block breadcrumbs %}
+  {{ block.super }}
+  {% breadcrumb business.name "business-detail" business.pk %}
+{% endblock %}
 {% block content %}
     <div class="row">
         <div class="col-sm-12">
@@ -32,10 +38,8 @@
             </ul>
 
             <br>
-            <div class="btn-group format-selection">
                 <a class="btn btn-primary js-tooltip" href="{% url "business-update" business.id %}" rel="nofollow" title="Edit this business">Edit Business</a>
-                <a class="btn btn-primary js-tooltip" href="{{ request.get_full_path }}" rel="nofollow" title="Delete this business">Delete Business</a>
-            </div>
+                <a class="btn btn-primary disabled js-tooltip" href="{{ request.get_full_path }}" rel="nofollow" title="Delete this business">Delete Business</a>
         </div>
     </div>
 {% endblock %}

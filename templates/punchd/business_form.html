@@ -1,6 +1,16 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}
+{% load django_bootstrap_breadcrumbs %}
 
+{% block breadcrumbs %}
+  {{ block.super }}
+    {% if business.pk %}
+        {% breadcrumb business.name "business-detail" business.pk %}
+        {% breadcrumb "Edit Business" "business-update" business.pk %}
+    {% else %}
+        {% breadcrumb "Create Business" "business-list" %}
+    {% endif %}
+{% endblock %}
 {% load url from future %}
 {% block title %}Edit Business{% endblock %}
 {% block content %}
@@ -9,7 +19,7 @@
     {% bootstrap_form form %}
     {% buttons %}
         <button type="submit" class="btn btn-primary">
-            Submit
+            Save Business
         </button>
     {% endbuttons %}
     </form>

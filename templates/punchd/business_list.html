@@ -4,7 +4,7 @@
 {% block content %}
     <h1>My Businesses</h1>
 
-    <table class="table table-bordered">
+    <table class="table table-striped table-bordered">
         <thead>
         <tr>
             <th>Name</th>
@@ -16,9 +16,9 @@
         <tbody>
         {% for business in object_list %}
             <tr>
-                <td><a href="{% url "business-detail" business.id %}">{{business.name}}</a></td>
+                <th><a href="{% url "business-detail" business.id %}">{{business.name}}</a></th>
                 <td>{{ business.address }}</td>
-                <td>{{ business.link }}</td>
+                <td><a href="{{ business.link|escape }}" class="text-muted">{{ business.link|escape }}</a></td>
                 <td><img src="{{ business.qrcode|escape }}" height="100" width="100"></td>
             </tr>
         {% empty %}
