@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.contrib.auth.models import User
 # from django.contrib.gis.db import models
 from django.utils import timezone
 from django.core.urlresolvers import reverse
@@ -37,9 +38,9 @@ class Business(models.Model):
         """
         offer = self.offer_set.filter(active=True).first()
 
-        if not user:
+        if hasattr(user, 'is_anonymous'):
             #TODO remove!!!
-            user = 1
+            user = User.objects.get(pk=1)
 
         if not offer:
             return False
