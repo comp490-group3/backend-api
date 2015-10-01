@@ -37,6 +37,10 @@ class Business(models.Model):
         """
         offer = self.offer_set.filter(active=True).first()
 
+        if not user:
+            #TODO remove!!!
+            user = 1
+
         if not offer:
             return False
 
